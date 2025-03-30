@@ -10,6 +10,7 @@ Shaman mask works ✅
 What doesn't work yet:
 Manastorm ❌
 Transcendence ❌
-
+Generalist ❌
+ 
 I am planning on making those work soon.
 Contact me on discord: jaden0303
