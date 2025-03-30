@@ -1,0 +1,31 @@
+.mana-calculator {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #2a2a2a;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+.mana-calculator h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.mana-calculator label {
+  display: block;
+  margin: 5px 0;
+}
+
+.mana-calculator input {
+  width: 60px;
+  margin-left: 5px;
+}
+
+.mana-calculator p {
+  margin: 10px 0 0;
+}

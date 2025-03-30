@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Wynnbuilder Mana Calculator",
+    "version": "1.0",
+    "description": "Adds a GUI to calculate Mana Consumption in Wynnbuilder.",
+    "permissions": ["scripting"],
+    "host_permissions": ["https://wynnbuilder.github.io/*"],
+    "content_scripts": [
+      {
+        "matches": ["https://wynnbuilder.github.io/*"],
+        "js": ["content.js"],
+        "css": ["styles.css"]
+      }
+    ]
+  }
