@@ -1,16 +1,14 @@
-# wynnManaCalc
+# WynnManaCalc
 
 WynnManaCalc is an extension for https://wynnbuilder.github.io/builder. This extension will automatically calculate your net mana gain/loss
-![image](https://github.com/user-attachments/assets/d4ce0d5b-6c26-435d-b74d-691385de1cf5)
+<img src="https://github.com/user-attachments/assets/01fc52a5-de4d-42a4-9763-a9f578a6f529" width="500"/>
 
-The mana cost is automatically grabbed from wynnbuilder thus:
-Radiance works ✅ 
-Shaman mask works ✅ 
+# Compatability:
+Radiance ✅ <br>
+Shaman mask ✅ <br>
+Generalist ✅ <br>
+Mana storm ✅ <br>
+Transcendence ✅ <br>
 
-What doesn't work yet:
-Manastorm ❌
-Transcendence ❌
-Generalist ❌
- 
-I am planning on making those work soon.
-Contact me on discord: jaden0303
+# Contact me on discord if you face any issues.
+jaden0303
