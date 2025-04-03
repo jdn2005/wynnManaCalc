@@ -15,6 +15,6 @@ Sunflare ✅ <br>
 Well of Power ✅ <br>
 Weightless ✅ <br>
 
-1 Mana with additional negative cost ❌
+1 mana cost with additional negative cost ❌
 
 Contact me on discord if you face any issues, jaden0303
