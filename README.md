@@ -6,6 +6,7 @@ Click [here](https://github.com/jdn2005/wynnManaCalc/releases/tag/1.2) to downlo
 
 # Compatability:
 Radiance ✅ <br>
+Cost reduction tomes ✅ <br>
 Shaman mask ✅ (partially) <br>
 Generalist ✅ <br>
 Mana storm ✅ <br>
