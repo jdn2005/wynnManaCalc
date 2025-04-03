@@ -16,19 +16,19 @@ Sunflare ✅ <br>
 Well of Power ✅ <br>
 Weightless ✅ <br>
 
-1 mana cost with additional negative cost ❌
+1 mana cost with additional negative cost ❌ <br>
 
-# Upcoming features:
-High Priority:
-Arcane Power, Restoration, Overflow sustain 🛠️
-Custom Additional Mana Regen sustain 🛠️
-Sorcery Major ID for Manastorm 🛠️
-Sorcery Major ID for Arcane Overflow 🛠️
-HP cost for spells 🛠️
+# Upcoming features: <br>
+High Priority: <br>
+Arcane Power, Restoration, Overflow sustain 🛠️ <br> 
+Custom Additional Mana Regen sustain 🛠️ <br> 
+Sorcery Major ID for Manastorm 🛠️ <br> 
+Sorcery Major ID for Arcane Overflow 🛠️ <br> 
+HP cost for spells 🛠️ <br> 
 
-Low Priority:
-Mana steal 🔨
-Masquarade 🔨
-Manachism 🔨
+Low Priority: <br> 
+Mana steal 🔨 <br> 
+Masquarade 🔨 <br> 
+Manachism 🔨 <br>
 
-Contact me on discord if you face any issues, jaden0303
+Contact me on discord if you face any issues, jaden0303 <br>
