@@ -1,19 +1,27 @@
 .mana-calculator {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
   background: #2a2a2a;
   color: #fff;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 0 10px 10px 10px; /* No top padding, header covers it */
+  border-radius: 5px; /* Full rounding */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   font-family: Arial, sans-serif;
+  cursor: grab;
 }
 
 .mana-calculator h3 {
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 16px;
+  user-select: none;
+  background: #1a1a1a;
+  padding: 8px 10px;
+  border-radius: 5px 5px 0 0;
+  width: calc(100% + 20px);
+  margin-left: -10px;
+  margin-right: -10px; 
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .mana-calculator label {
@@ -21,11 +29,62 @@
   margin: 5px 0;
 }
 
-.mana-calculator input {
+.mana-calculator input[type="number"],
+.mana-calculator input[type="text"] {
   width: 60px;
   margin-left: 5px;
 }
 
+.mana-calculator input[type="range"] {
+  width: 100%;
+  margin: 5px 0;
+}
+
 .mana-calculator p {
   margin: 10px 0 0;
+}
+
+#toggleButtons {
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 300px;
+}
+
+#toggleButtons button {
+  flex: 1 1 calc(50% - 5px);
+  margin: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  background: #333333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#toggleButtons button:hover {
+  background: #444444;
+}
+
+#totemControls, #hitsControls {
+  margin-top: 10px;
+}
+
+#totemControls p, #hitsControls p {
+  margin: 5px 0;
+}
+
+#totemControls button {
+  background: #333333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+#totemControls button:hover {
+  background: #444444;
 }
