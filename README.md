@@ -6,9 +6,15 @@ Click [here](https://github.com/jdn2005/wynnManaCalc/releases/tag/Release) to do
 
 # Compatability:
 Radiance ✅ <br>
-Shaman mask ✅ <br>
+Shaman mask ✅ <br> (partially)
 Generalist ✅ <br>
 Mana storm ✅ <br>
 Transcendence ✅ <br>
+Invigorating Wave ✅ <br>
+Sunflare ✅ <br>
+Well of Power ✅ <br>
+Weightless ✅ <br>
+
+1 Mana with additional negative cost ❌
 
 Contact me on discord if you face any issues, jaden0303
