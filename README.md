@@ -18,4 +18,17 @@ Weightless ✅ <br>
 
 1 mana cost with additional negative cost ❌
 
+# Upcoming features:
+High Priority:
+Arcane Power, Restoration, Overflow sustain 🛠️
+Custom Additional Mana Regen sustain 🛠️
+Sorcery Major ID for Manastorm 🛠️
+Sorcery Major ID for Arcane Overflow 🛠️
+HP cost for spells 🛠️
+
+Low Priority:
+Mana steal 🔨
+Masquarade 🔨
+Manachism 🔨
+
 Contact me on discord if you face any issues, jaden0303
