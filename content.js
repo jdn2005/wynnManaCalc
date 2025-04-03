@@ -161,6 +161,11 @@ currentY = window.innerHeight - calculator.offsetHeight - 10;
 calculator.style.left = `${currentX}px`;
 calculator.style.top = `${currentY}px`;
 
+// Function to map int-skp-pct to desired output (linear)
+function mapIntSkpPct(pct) {
+  return 3 * pct; // Linear: 0% -> 0, 50% -> 150
+}
+
 // Function to scrape mana regen, spell costs, and mana pool from WynnBuilder
 function getManaStats() {
   let manaRegenPerSec = 0;
@@ -206,7 +211,7 @@ function getManaStats() {
     return numericValue;
   });
 
-  // Default total mana pool 
+  // Default total mana pool (used for Sunflare and elsewhere)
   let totalManaPool = 100;
   try {
     const maxManaLabelNode = document.evaluate('//*[@id="detailed-stats"]/div[12]/div[1]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -229,7 +234,7 @@ function getManaStats() {
 
   console.log('Mana Regen Per Sec:', manaRegenPerSec);
   console.log('Spell Costs Array:', spellCosts);
-  console.log('Total Mana Pool (general):', totalManaPool);
+  console.log('Total Mana Pool:', totalManaPool);
   return { manaRegenPerSec, spellCosts, totalManaPool };
 }
 
@@ -304,9 +309,56 @@ function updateManaCalc() {
     console.log(`Weightless: ${hitsCount} hits, ${manaPerHit} mana each, total +${hitsCount * manaPerHit}`);
   }
 
-  // Sunflare
+    // Sunflare
   if (sunflareActive) {
-    let sunflareManaPool = 100; // Default for Sunflare
+    let sunflareManaPool = 100; // Base mana pool
+    let intSkp = 0; // Default value for int-skp
+
+    // Extract int-skp from input
+    try {
+      const intSkpNode = document.evaluate('//*[@id="int-skp"]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      if (intSkpNode) {
+        const rawIntSkp = intSkpNode.tagName.toLowerCase() === 'input' ? intSkpNode.value.trim() : intSkpNode.textContent.trim();
+        console.log(`int-skp raw: "${rawIntSkp}"`);
+        intSkp = parseFloat(rawIntSkp.match(/\d+(\.\d+)?/)?.[0]) || 0;
+        console.log(`int-skp parsed value: ${intSkp}`);
+      } else {
+        console.warn('int-skp element not found at //*[@id="int-skp"]');
+      }
+    } catch (e) {
+      console.error('Error evaluating int-skp XPath:', e);
+    }
+
+    // Exact mapping function
+    function mapIntToPercent(int) {
+      const intMap = {
+        1: 1.0, 2: 2.0, 3: 2.9, 4: 3.9, 5: 4.9, 6: 5.8, 7: 6.7, 8: 7.7, 9: 8.6, 10: 9.5, 11: 10.4, 12: 11.3, 13: 12.2, 14: 13.1, 15: 13.9, 16: 14.8, 17: 15.7, 18: 16.5,
+        19: 17.3, 20: 18.2, 21: 19.0, 22: 19.8, 23: 20.6, 24: 21.4, 25: 22.2, 26: 23.0, 27: 23.8, 28: 24.6, 29: 25.3, 30: 26.1, 31: 26.8, 32: 27.6, 33: 28.3, 34: 29,
+        35: 29.8, 36: 30.5, 37: 31.2, 38: 31.9, 39: 32.6, 40: 33.3, 41: 34, 42: 34.6, 43: 35.3, 44: 36, 45: 36.6, 46: 37.3, 47: 37.9, 48: 38.6, 49: 39.2, 50: 39.9,
+        51: 40.5, 52: 41.1, 53: 41.7, 54: 42.3, 55: 42.9, 56: 43.5, 57: 44.1, 58: 44.7, 59: 45.3, 60: 45.8, 61: 46.4, 62: 47, 63: 47.5, 64: 48.1, 65: 48.6, 66: 49.2,
+        67: 49.7, 68: 50.3, 69: 50.8, 70: 51.3, 71: 51.8, 72: 52.3, 73: 52.8, 74: 53.4, 75: 53.9, 76: 54.3, 77: 54.8, 78: 55.3, 79: 55.8, 80: 56.3, 81: 56.8, 82: 57.2,
+        83: 57.7, 84: 58.1, 85: 58.6, 86: 59.1, 87: 59.5, 88: 59.9, 89: 60.4, 90: 60.8, 91: 61.3, 92: 61.7, 93: 62.1, 94: 62.5, 95: 62.9, 96: 63.3, 97: 63.8, 98: 64.2,
+        99: 64.6, 100: 65, 101: 65.4, 102: 65.7, 103: 66.1, 104: 66.5, 105: 66.9, 106: 67.3, 107: 67.6, 108: 68, 109: 68.4, 110: 68.7, 111: 69.1, 112: 69.4, 113: 69.8,
+        114: 70.1, 115: 70.5, 116: 70.8, 117: 71.2, 118: 71.5, 119: 71.8, 120: 72.2, 121: 72.5, 122: 72.8, 123: 73.1, 124: 73.5, 125: 73.8, 126: 74.1, 127: 74.4, 128: 74.7,
+        129: 75, 130: 75.3, 131: 75.6, 132: 75.9, 133: 76.2, 134: 76.5, 135: 76.8, 136: 77.1, 137: 77.3, 138: 77.6, 139: 77.9, 140: 78.2, 141: 78.4, 142: 78.7, 143: 79, 144: 79.2,
+        145: 79.5, 146: 79.8, 147: 80, 148: 80.3, 149: 80.5, 150: 80.8
+        // THERE WERE NO BETTER WAY TO DO THIS 
+      };
+      if (int <= 0) return 0;
+      if (intMap[int]) return intMap[int];
+      if (int > 150) return 80.8 + (int - 150) * 0.8;
+      const lower = Math.floor(int);
+      const upper = Math.ceil(int);
+      const lowerVal = intMap[lower] || 0;
+      const upperVal = intMap[upper] || (27.6 + (upper - 32) * 0.8);
+      return lowerVal + (upperVal - lowerVal) * (int - lower);
+    }
+
+    const intSkpPercent = mapIntToPercent(intSkp);
+    const intSkpManaContribution = intSkpPercent;
+    sunflareManaPool += intSkpManaContribution;
+    console.log(`Sunflare: int-skp=${intSkp}, percent=${intSkpPercent.toFixed(1)}%`);
+
     try {
       const sunflareMaxManaLabelNode = document.evaluate('//*[@id="detailed-stats"]/div[13]/div[1]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
       if (sunflareMaxManaLabelNode && sunflareMaxManaLabelNode.textContent.trim() === 'Max Mana') {
@@ -314,23 +366,19 @@ function updateManaCalc() {
         if (sunflareMaxManaValueNode) {
           const rawSunflareMaxMana = sunflareMaxManaValueNode.textContent.trim();
           console.log(`Sunflare Max Mana raw (div[13]): "${rawSunflareMaxMana}"`);
-          sunflareManaPool = parseFloat(rawSunflareMaxMana) || 100;
-        } else {
-          console.warn('Sunflare Max Mana value element (div[13]) not found, defaulting to 100');
+          const additionalMana = parseFloat(rawSunflareMaxMana) || 0;
+          sunflareManaPool = additionalMana > 0 ? additionalMana : sunflareManaPool;
         }
-      } else {
-        console.warn(`Sunflare Max Mana label not found at //*[@id="detailed-stats"]/div[13]/div[1] or text is "${sunflareMaxManaLabelNode?.textContent.trim()}", defaulting to 100`);
       }
     } catch (e) {
       console.error('Error evaluating Sunflare Max Mana XPath (div[13]):', e);
-      sunflareManaPool = 100;
     }
+
     const sunflareMana = sunflareManaPool * 0.05;
     adjustedManaRegen += sunflareMana;
-    console.log(`Sunflare: 5% of ${sunflareManaPool} mana pool, +${sunflareMana.toFixed(2)} mana/sec`);
+    console.log(`Sunflare: Total Mana Pool=${sunflareManaPool.toFixed(1)}, Regen=+${sunflareMana.toFixed(2)} mana/sec`);
   }
-
-  // Well of Power - adds 3 mana regen per second
+    // Well of Power - adds 3 mana regen per second
   if (wellOfPowerActive) {
     adjustedManaRegen += 3;
     console.log('Well of Power: +3 mana/sec');
