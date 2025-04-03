@@ -32,5 +32,7 @@ Low Priority: <br>
 Mana steal 🔨 <br> 
 Masquarade 🔨 <br> 
 Manachism 🔨 <br>
+Time to drain mana pool 🔨 <br>
+Time to drain health pool 🔨 <br>
 
 Contact me on discord if you face any issues, jaden0303 <br>
