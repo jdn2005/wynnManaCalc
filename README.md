@@ -35,4 +35,9 @@ Manachism 🔨 <br>
 Time to drain mana pool 🔨 <br>
 Time to drain health pool 🔨 <br>
 
+# Troubleshoot <br>
+If you are getting the "CRX_REQUIRED_PROOF_MISSING" error. Be sure to enable "Developer Mode" in your browser <br>
+![Screenshot 2025-04-08 200724](https://github.com/user-attachments/assets/f66e69ad-fddb-4c7d-8fc0-3ddbc815ec17)
+
+
 Contact me on discord if you face any issues, jaden0303 <br>
