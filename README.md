@@ -39,5 +39,7 @@ Time to drain health pool 🔨 <br>
 If you are getting the "CRX_REQUIRED_PROOF_MISSING" error. Be sure to enable "Developer Mode" in your browser <br>
 <br>
 <img src="https://github.com/user-attachments/assets/f66e69ad-fddb-4c7d-8fc0-3ddbc815ec17" width="1000"/> <br>
+<br>
+If you still can't get the extension working, download this repo and load unpacked in your chrome extension page. <br>
 
 Contact me on discord if you face any issues, jaden0303 <br>
