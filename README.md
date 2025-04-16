@@ -43,5 +43,5 @@ Time to drain health pool 🔨 <br>
 - If you still can't get the extension working, download this repo and load unpacked in your chrome extension page. <br>
 <br>
 <img src="https://github.com/user-attachments/assets/ef449d51-e57f-42a4-8db2-a7b9ec064386" width="400"/> <br>
-
+<br>
 Contact me on discord if you face any issues, jaden0303 <br>
