@@ -4,7 +4,7 @@ WynnManaCalc is an extension for https://wynnbuilder.github.io/builder. This ext
 <br>
 <img src="https://github.com/user-attachments/assets/3a0bf951-979e-40ac-8aa8-eb1fbf989fe6" width="400" /> <br>
 <br>
-Click [here](https://github.com/jdn2005/wynnManaCalc/releases/tag/1.2) to download.<br>
+Click [here](https://github.com/jdn2005/wynnManaCalc/releases) to download.<br>
 
 # Compatability:
 Radiance ✅ <br>
@@ -47,7 +47,7 @@ If you still can't get the extension working, download this repo and load unpack
 <img src="https://github.com/user-attachments/assets/ef449d51-e57f-42a4-8db2-a7b9ec064386" width="400"/> <br>
 <br>
 ## FireFox: <br>
-1. Download the manaCalc.zip <br>
+1. Download the [manaCalc.zip](https://github.com/jdn2005/wynnManaCalc/releases) <br>
 2. Goto about:debugging#/runtime/this-firefox <br>
 3. Click load temporary addon <br>
 4. Click manaCalc.zip <br>
