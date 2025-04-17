@@ -44,6 +44,19 @@
   margin: 10px 0 0;
 }
 
+#hpCostContainer {
+  color: #ff5555; /* Red to indicate HP */
+}
+
+#hpCost {
+  font-size: 0.9em; /* Slightly smaller font for HP cost and percentage */
+}
+
+.hp-cost {
+  color: #ff5555; /* Red for %HP cost next to spell names */
+  font-size: 0.9em;
+}
+
 #toggleButtons {
   margin: 10px 0;
   display: flex;
@@ -68,11 +81,41 @@
   background: #444444;
 }
 
-#totemControls, #hitsControls {
+#totemControls, #hitsControls, #arcaneTransferControls, #thunderstormControls, #chaosExplosionControls, #bloodPactControls {
   margin-top: 10px;
 }
 
-#totemControls p, #hitsControls p {
+#arcaneTransferControls, #bloodPactControls {
+  display: block; /* Ensure the container is a block element */
+}
+
+#arcaneTransferControls .button-group, #bloodPactControls .button-group {
+  display: flex;
+  flex-direction: row; /* Stack buttons horizontally */
+  gap: 5px; /* Add gaps between buttons */
+  margin-top: 5px; /* Optional: space above the button group */
+}
+
+#arcaneTransferControls button, #bloodPactControls button {
+  background: #333333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+  flex: 1; /* Make buttons share available space equally */
+  box-sizing: border-box;
+}
+
+#arcaneTransferControls button:hover, #bloodPactControls button:hover {
+  background: #444444;
+}
+
+#arcaneTransferControls button:focus, #bloodPactControls button:focus {
+  outline: 2px solid #fff;
+}
+
+#totemControls p, #hitsControls p, #arcaneTransferControls p, #thunderstormControls p, #chaosExplosionControls p, #bloodPactControls p {
   margin: 5px 0;
 }
 
@@ -83,8 +126,38 @@
   border-radius: 3px;
   padding: 5px;
   cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #totemControls button:hover {
   background: #444444;
+}
+
+#totemControls button:focus {
+  outline: 2px solid #fff;
+}
+
+#arcaneTransferControls input[type="range"],
+#thunderstormControls input[type="range"],
+#chaosExplosionControls input[type="range"] {
+  width: 100%;
+  margin: 5px 0;
+}
+
+#toggleButtons button:focus {
+  outline: 2px solid #fff;
+}
+
+@media (max-width: 600px) {
+  .mana-calculator {
+    width: 90vw;
+    font-size: 14px;
+  }
+  #toggleButtons button {
+    flex: 1 1 100%;
+  }
+  #totemControls button, #arcaneTransferControls button, #bloodPactControls button {
+    font-size: 14px;
+  }
 }
