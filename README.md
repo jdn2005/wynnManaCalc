@@ -37,6 +37,7 @@ Time to drain mana pool 🔨 <br>
 Time to drain health pool 🔨 <br>
 
 # Troubleshoot <br>
+## Chrome: <br>
 If you are getting the "CRX_REQUIRED_PROOF_MISSING" error. Be sure to enable "Developer Mode" in your browser <br>
 <br>
 <img src="https://github.com/user-attachments/assets/f66e69ad-fddb-4c7d-8fc0-3ddbc815ec17" width="700"/> <br>
@@ -45,4 +46,11 @@ If you still can't get the extension working, download this repo and load unpack
 <br>
 <img src="https://github.com/user-attachments/assets/ef449d51-e57f-42a4-8db2-a7b9ec064386" width="400"/> <br>
 <br>
+## FireFox: <br>
+1. Download the manaCalc.zip <br>
+2. Goto about:debugging#/runtime/this-firefox <br>
+3. Click load temporary addon <br>
+4. Click manaCalc.zip <br>
+
+
 Contact me on discord if you face any issues, jaden0303 <br>
