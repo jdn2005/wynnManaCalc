@@ -2,7 +2,7 @@
 
 WynnManaCalc is an extension for https://wynnbuilder.github.io/builder. This extension will automatically calculate your net mana gain/loss. <br>
 <br>
-<img src="https://github.com/user-attachments/assets/3a0bf951-979e-40ac-8aa8-eb1fbf989fe6" width="400" /> <br>
+<img src="https://github.com/user-attachments/assets/967f114f-b28f-4012-a3ea-33716c73ec70" width="600" /> <br>
 <br>
 Click [here](https://github.com/jdn2005/wynnManaCalc/releases) to download.<br>
 
