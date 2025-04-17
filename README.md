@@ -28,6 +28,8 @@ HP Cost for Spells ✅ <br>
 High Priority: <br>
 Custom Additional Mana Regen sustain 🛠️ <br> 
 Sorcery Major ID for Manastorm 🛠️ <br> 
+Recycling 🛠️ <br> 
+Mana Traps 🛠️ <br> 
 
 Low Priority: <br> 
 Mana steal 🔨 <br> 
