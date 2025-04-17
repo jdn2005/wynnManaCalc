@@ -17,16 +17,17 @@ Invigorating Wave ✅ <br>
 Sunflare ✅ <br>
 Well of Power ✅ <br>
 Weightless ✅ <br>
+Arcane Transfer, Chaos Explpsion ✅ <br>
+Blood Pact ✅ <br>
+HP Cost for Spells ✅ <br>
+
 
 1 mana cost with additional negative cost ❌ <br>
 
 # Upcoming features: <br>
 High Priority: <br>
-Arcane Power, Restoration, Overflow sustain 🛠️ <br> 
 Custom Additional Mana Regen sustain 🛠️ <br> 
 Sorcery Major ID for Manastorm 🛠️ <br> 
-Sorcery Major ID for Arcane Overflow 🛠️ <br> 
-HP cost for spells 🛠️ <br> 
 
 Low Priority: <br> 
 Mana steal 🔨 <br> 
