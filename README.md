@@ -38,6 +38,17 @@ Manachism 🔨 <br>
 Time to drain mana pool 🔨 <br>
 Time to drain health pool 🔨 <br>
 
+# How to Install <br>
+## Chrome: <br>
+1. Install the .crx file
+2. Double click it
+
+## FireFox: <br>
+1. Download the [manaCalc.zip](https://github.com/jdn2005/wynnManaCalc/releases) <br>
+2. Search "about:debugging#/runtime/this-firefox" in your Firefox searchbar <br>
+3. Click load temporary addon <br>
+4. Click manaCalc.zip <br>
+
 # Troubleshoot <br>
 ## Chrome: <br>
 1.If you are getting the "CRX_REQUIRED_PROOF_MISSING" error. Be sure to enable "Developer Mode" in your browser <br>
@@ -48,11 +59,5 @@ Time to drain health pool 🔨 <br>
 <br>
 <img src="https://github.com/user-attachments/assets/ef449d51-e57f-42a4-8db2-a7b9ec064386" width="400"/> <br>
 <br>
-## FireFox: <br>
-1. Download the [manaCalc.zip](https://github.com/jdn2005/wynnManaCalc/releases) <br>
-2. Search "about:debugging#/runtime/this-firefox" in your Firefox searchbar <br>
-3. Click load temporary addon <br>
-4. Click manaCalc.zip <br>
-
 
 Contact me on discord if you face any issues, jaden0303 <br>
