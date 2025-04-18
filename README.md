@@ -45,7 +45,7 @@ Time to drain health pool 🔨 <br>
 
 ## FireFox: <br>
 1. Download the [manaCalc.zip](https://github.com/jdn2005/wynnManaCalc/releases) <br>
-2. Search "about:debugging#/runtime/this-firefox" in your Firefox searchbar <br>
+2. Search "about:debugging#/runtime/this-firefox" in your Firefox searchbar" <br>
 3. Click load temporary addon <br>
 4. Click manaCalc.zip <br>
 
