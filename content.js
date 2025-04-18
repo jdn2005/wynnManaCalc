@@ -580,32 +580,39 @@ if (!document.querySelector('#summary-stats')) {
           console.log(`Chaos Explosion Regen: ${manaBankPerSec * chaosActivations}`);
         }
 
+        // Track unique spells for Generalist
+        const seenSpells = new Set();
+        let uniqueSpellCount = 0;
+
         totalManaCost = cycleArray.reduce((sum, spellNum, index) => {
           const spellIndex = spellNum - 1;
           const baseCost = spellCosts[spellIndex] || 0;
           let currentCost = baseCost;
 
+          // Arcane Transfer: Spell 1 costs 0 if archetype is active
           if (spellNum === 1 && isArcaneTransferArchetype) {
             currentCost = 0;
-            console.log(`Spell 1: Arcane Transfer, Cost=0`);
+            console.log(`Spell ${spellNum}: Arcane Transfer, Cost=0`);
           }
 
+          // Repeated spell penalty
           if (spellNum === lastSpell) {
             currentCost += 5;
+            console.log(`Spell ${spellNum}: Repeated spell, +5 mana, Cost=${currentCost}`);
           }
 
-          if (generalistActive && index >= 2) {
-            const prev2 = cycleArray[index - 2];
-            const prev1 = cycleArray[index - 1];
-            const current = spellNum;
-            if (prev2 !== prev1 && prev1 !== current && prev2 !== current) {
+          // Generalist: Every third unique spell costs 1 mana
+          if (generalistActive && !seenSpells.has(spellNum)) {
+            seenSpells.add(spellNum);
+            uniqueSpellCount += 1;
+            if (uniqueSpellCount % 3 === 0) {
               currentCost = 1;
-              console.log(`Generalist: Spell ${spellNum} Cost=1`);
+              console.log(`Generalist: Spell ${spellNum} at index ${index} (unique spell #${uniqueSpellCount}), Cost=1`);
             }
           }
 
           lastSpell = spellNum;
-          console.log(`Spell ${spellNum}: Base=${baseCost}, Cost=${currentCost}`);
+          console.log(`Spell ${spellNum}: Base=${baseCost}, Final Cost=${currentCost}`);
           return sum + currentCost;
         }, 0);
 
@@ -678,8 +685,7 @@ if (!document.querySelector('#summary-stats')) {
         if (fallenAspectActive) {
           hpPercentPerMana -= 0.1;
         }
-        // New HP Cost calculation: (manaCostPerSec - adjustedManaRegen) * hpPercentPerMana * totalHP
-        const netManaDeficit = Math.max(0, manaCostPerSec - adjustedManaRegen); // Ensure non-negative
+        const netManaDeficit = Math.max(0, manaCostPerSec - adjustedManaRegen);
         const hpCost = netManaDeficit * (hpPercentPerMana / 100) * totalHP;
         hpCostPerSec = hpCost;
         hpPercentPerSec = totalHP > 0 ? (hpCostPerSec / totalHP) * 100 : 0;
