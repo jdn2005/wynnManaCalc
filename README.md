@@ -40,7 +40,7 @@ Time to drain health pool 🔨 <br>
 
 # How to Install <br>
 ## Chrome: <br>
-1. Install the .crx file
+1. Download the .crx file
 2. Double click it
 
 ## FireFox: <br>
