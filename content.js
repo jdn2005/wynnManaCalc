@@ -519,7 +519,6 @@ if (!document.querySelector('#summary-stats')) {
           }
         }
 
-        let lastSpell = null;
         let totalManaBank = 0;
 
         function calculateSpellManaBank(spellNum, cycle) {
@@ -580,41 +579,100 @@ if (!document.querySelector('#summary-stats')) {
           console.log(`Chaos Explosion Regen: ${manaBankPerSec * chaosActivations}`);
         }
 
-        // Track unique spells for Generalist
-        const seenSpells = new Set();
-        let uniqueSpellCount = 0;
-
-        totalManaCost = cycleArray.reduce((sum, spellNum, index) => {
-          const spellIndex = spellNum - 1;
-          const baseCost = spellCosts[spellIndex] || 0;
-          let currentCost = baseCost;
-
-          // Arcane Transfer: Spell 1 costs 0 if archetype is active
-          if (spellNum === 1 && isArcaneTransferArchetype) {
-            currentCost = 0;
-            console.log(`Spell ${spellNum}: Arcane Transfer, Cost=0`);
+        // Generalist Logic
+        if (generalistActive) {
+          // Shift cycle so first != last
+          while (cycleArray.length > 1 && cycleArray[0] === cycleArray[cycleArray.length - 1]) {
+            cycleArray = [cycleArray.pop()].concat(cycleArray);
+            console.log('Shifted cycle to avoid first=last:', cycleArray);
           }
 
-          // Repeated spell penalty
-          if (spellNum === lastSpell) {
-            currentCost += 5;
-            console.log(`Spell ${spellNum}: Repeated spell, +5 mana, Cost=${currentCost}`);
+          const cycleCosts = [];
+          let repeat = 0;
+
+          // Handle first two spells
+          for (let i = 0; i < Math.min(2, cycleArray.length); i++) {
+            const spellNum = cycleArray[i];
+            const spellIndex = spellNum - 1;
+            const baseCost = spellCosts[spellIndex] || 0;
+            let currentCost = baseCost;
+            // Arcane Transfer: Spell 1 costs 0 if archetype is active
+            if (spellNum === 1 && isArcaneTransferArchetype) {
+              currentCost = 0;
+              console.log(`Spell ${spellNum}: Arcane Transfer, Cost=0`);
+            }
+            currentCost = Math.max(1, currentCost);
+            cycleCosts.push(currentCost);
+            console.log(`Spell ${spellNum} (index ${i}): Base=${baseCost}, Cost=${currentCost}`);
           }
 
-          // Generalist: Every third unique spell costs 1 mana
-          if (generalistActive && !seenSpells.has(spellNum)) {
-            seenSpells.add(spellNum);
-            uniqueSpellCount += 1;
-            if (uniqueSpellCount % 3 === 0) {
-              currentCost = 1;
-              console.log(`Generalist: Spell ${spellNum} at index ${index} (unique spell #${uniqueSpellCount}), Cost=1`);
+          // Handle remaining spells with repeat penalty
+          for (let i = 2; i < cycleArray.length; i++) {
+            const spellNum = cycleArray[i];
+            const spellIndex = spellNum - 1;
+            const baseCost = spellCosts[spellIndex] || 0;
+            let currentCost = baseCost;
+
+            // Arcane Transfer: Spell 1 costs 0 if archetype is active
+            if (spellNum === 1 && isArcaneTransferArchetype) {
+              currentCost = 0;
+              console.log(`Spell ${spellNum}: Arcane Transfer, Cost=0`);
+            }
+
+            // Check for repeat with previous spell
+            if (i > 0 && cycleArray[i] === cycleArray[i - 1]) {
+              repeat += 1;
+            } else {
+              repeat = 0;
+            }
+
+            currentCost += repeat * 5;
+            currentCost = Math.max(1, currentCost);
+            cycleCosts.push(currentCost);
+            console.log(`Spell ${spellNum} (index ${i}): Base=${baseCost}, Repeat=${repeat}, Cost=${currentCost}`);
+          }
+
+          // Apply repeat penalty to first spell if last two spells are the same
+          if (cycleArray.length > 1 && cycleArray[cycleArray.length - 1] === cycleArray[cycleArray.length - 2]) {
+            const firstSpellNum = cycleArray[0];
+            const firstSpellIndex = firstSpellNum - 1;
+            const baseFirstCost = spellCosts[firstSpellIndex] || 0;
+            let adjustedFirstCost = baseFirstCost;
+            if (firstSpellNum === 1 && isArcaneTransferArchetype) {
+              adjustedFirstCost = 0;
+            }
+            adjustedFirstCost += repeat * 5;
+            if (adjustedFirstCost > 1) {
+              cycleCosts[0] = adjustedFirstCost;
+              console.log(`First spell adjusted for wraparound repeat: Base=${baseFirstCost}, Repeat=${repeat}, Cost=${adjustedFirstCost}`);
             }
           }
 
-          lastSpell = spellNum;
-          console.log(`Spell ${spellNum}: Base=${baseCost}, Final Cost=${currentCost}`);
-          return sum + currentCost;
-        }, 0);
+          totalManaCost = cycleCosts.reduce((sum, cost) => sum + cost, 0);
+          console.log('Cycle Costs:', cycleCosts, 'Total Mana Cost:', totalManaCost);
+        } else {
+          // Non-Generalist logic
+          let lastSpell = null;
+          totalManaCost = cycleArray.reduce((sum, spellNum, index) => {
+            const spellIndex = spellNum - 1;
+            const baseCost = spellCosts[spellIndex] || 0;
+            let currentCost = baseCost;
+
+            if (spellNum === 1 && isArcaneTransferArchetype) {
+              currentCost = 0;
+              console.log(`Spell ${spellNum}: Arcane Transfer, Cost=0`);
+            }
+
+            if (spellNum === lastSpell) {
+              currentCost += 5;
+              console.log(`Spell ${spellNum}: Repeated spell, +5 mana, Cost=${currentCost}`);
+            }
+
+            lastSpell = spellNum;
+            console.log(`Spell ${spellNum}: Base=${baseCost}, Final Cost=${currentCost}`);
+            return sum + currentCost;
+          }, 0);
+        }
 
         if (transcendenceActive) {
           totalManaCost *= 0.7;
@@ -680,16 +738,20 @@ if (!document.querySelector('#summary-stats')) {
       const netMana = adjustedManaRegen - manaCostPerSec;
 
       // Calculate HP cost for Blood Pact
-      if (bloodPactActive) {
+      if (bloodPactActive && netMana < -25) {
         let hpPercentPerMana = haemorrhageActive ? 0.25 : 0.35;
         if (fallenAspectActive) {
           hpPercentPerMana -= 0.1;
         }
-        const netManaDeficit = Math.max(0, manaCostPerSec - adjustedManaRegen);
+        const netManaDeficit = Math.abs(netMana);
         const hpCost = netManaDeficit * (hpPercentPerMana / 100) * totalHP;
         hpCostPerSec = hpCost;
         hpPercentPerSec = totalHP > 0 ? (hpCostPerSec / totalHP) * 100 : 0;
         console.log(`Blood Pact HP Cost: (${manaCostPerSec} - ${adjustedManaRegen}) * ${hpPercentPerMana}% * ${totalHP} HP = ${hpCost.toFixed(2)} HP/sec (${hpPercentPerSec.toFixed(2)}%)`);
+      } else if (bloodPactActive) {
+        hpCostPerSec = 0;
+        hpPercentPerSec = 0;
+        console.log('Blood Pact: No HP cost (net mana >= -25)');
       }
 
       console.log('Final:', { adjustedManaRegen, manaCostPerSec, hpCostPerSec, hpPercentPerSec, netMana, manaBank });
