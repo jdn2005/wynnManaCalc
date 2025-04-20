@@ -738,12 +738,12 @@ if (!document.querySelector('#summary-stats')) {
       const netMana = adjustedManaRegen - manaCostPerSec;
 
       // Calculate HP cost for Blood Pact
-      if (bloodPactActive && netMana < -25) {
+      if (bloodPactActive && netMana > -25) {
         let hpPercentPerMana = haemorrhageActive ? 0.25 : 0.35;
         if (fallenAspectActive) {
           hpPercentPerMana -= 0.1;
         }
-        const netManaDeficit = Math.abs(netMana);
+        const netManaDeficit = netMana < 0 ? Math.abs(netMana) : 0;
         const hpCost = netManaDeficit * (hpPercentPerMana / 100) * totalHP;
         hpCostPerSec = hpCost;
         hpPercentPerSec = totalHP > 0 ? (hpCostPerSec / totalHP) * 100 : 0;
@@ -751,7 +751,7 @@ if (!document.querySelector('#summary-stats')) {
       } else if (bloodPactActive) {
         hpCostPerSec = 0;
         hpPercentPerSec = 0;
-        console.log('Blood Pact: No HP cost (net mana >= -25)');
+        console.log('Blood Pact: No HP cost (net mana <= -25)');
       }
 
       console.log('Final:', { adjustedManaRegen, manaCostPerSec, hpCostPerSec, hpPercentPerSec, netMana, manaBank });
