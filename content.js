@@ -386,10 +386,10 @@ if (!document.querySelector('#summary-stats')) {
       console.log('Total HP:', totalHP);
 
       const spellNameXPaths = [
-        '/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div/b/span[1]',
-        '/html/body/div[3]/div[2]/div[3]/div[1]/div[3]/div[1]/div/b/span[1]',
-        '/html/body/div[3]/div[2]/div[3]/div[1]/div[4]/div[1]/div/b/span[1]',
-        '/html/body/div[3]/div[2]/div[3]/div[1]/div[5]/div[1]/div/b/span[1]'
+        '/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div/b/span[1]', // Spell 1
+        '/html/body/div[3]/div[2]/div[3]/div[1]/div[3]/div[1]/div/b/span[1]', // Spell 2
+        '/html/body/div[3]/div[2]/div[3]/div[1]/div[4]/div[1]/div/b/span[1]', // Spell 3 (corrected)
+        '/html/body/div[3]/div[2]/div[3]/div[1]/div[5]/div[1]/div/b/span[1]'  // Spell 4
       ];
       const spellNameNodes = spellNameXPaths.map((xpath, index) => {
         try {
@@ -413,6 +413,7 @@ if (!document.querySelector('#summary-stats')) {
   function updateSpellHPCosts(isBloodPactActive) {
     try {
       const { spellCosts, spellNameNodes } = getManaStats();
+      const netMana = document.getElementById('netMana') ? parseFloat(document.getElementById('netMana').textContent) || 0 : 0;
       let hpPercentPerMana = haemorrhageActive ? 0.25 : 0.35;
       if (fallenAspectActive) {
         hpPercentPerMana -= 0.1;
@@ -430,7 +431,7 @@ if (!document.querySelector('#summary-stats')) {
           existingSpan.remove();
         }
 
-        if (isBloodPactActive) {
+        if (isBloodPactActive && netMana < 0) {
           const manaCost = spellCosts[index] || 0;
           const hpPercent = manaCost * hpPercentPerMana;
           const span = document.createElement('span');
@@ -738,20 +739,19 @@ if (!document.querySelector('#summary-stats')) {
       const netMana = adjustedManaRegen - manaCostPerSec;
 
       // Calculate HP cost for Blood Pact
-      if (bloodPactActive && netMana > -25) {
+      if (bloodPactActive && netMana < 0) {
         let hpPercentPerMana = haemorrhageActive ? 0.25 : 0.35;
         if (fallenAspectActive) {
           hpPercentPerMana -= 0.1;
         }
-        const netManaDeficit = netMana < 0 ? Math.abs(netMana) : 0;
-        const hpCost = netManaDeficit * (hpPercentPerMana / 100) * totalHP;
+        const hpCost = manaCostPerSec * (hpPercentPerMana / 100) * totalHP;
         hpCostPerSec = hpCost;
         hpPercentPerSec = totalHP > 0 ? (hpCostPerSec / totalHP) * 100 : 0;
-        console.log(`Blood Pact HP Cost: (${manaCostPerSec} - ${adjustedManaRegen}) * ${hpPercentPerMana}% * ${totalHP} HP = ${hpCost.toFixed(2)} HP/sec (${hpPercentPerSec.toFixed(2)}%)`);
+        console.log(`Blood Pact HP Cost: ${manaCostPerSec} mana/sec * ${hpPercentPerMana}% * ${totalHP} HP = ${hpCost.toFixed(2)} HP/sec (${hpPercentPerSec.toFixed(2)}%)`);
       } else if (bloodPactActive) {
         hpCostPerSec = 0;
         hpPercentPerSec = 0;
-        console.log('Blood Pact: No HP cost (net mana <= -25)');
+        console.log('Blood Pact: No HP cost (net mana >= 0)');
       }
 
       console.log('Final:', { adjustedManaRegen, manaCostPerSec, hpCostPerSec, hpPercentPerSec, netMana, manaBank });
